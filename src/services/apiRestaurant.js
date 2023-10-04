@@ -42,15 +42,10 @@ export async function createOrder(newOrder) {
 
 export async function updateOrder(id, updateObj) {
 	try {
-		const res = await fetch(`${API_URL}/order/${id}`, {
-			method: "PATCH",
-			body: JSON.stringify(updateObj),
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		const response = await axios.post(`${API_URL}/order/${id}`, updateObj);
 
-		if (!res.ok) throw Error();
+		if (!response.ok) throw Error();
+
 		// We don't need the data, so we don't return anything
 	} catch (err) {
 		throw Error("Failed updating your order");
