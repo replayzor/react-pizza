@@ -5,22 +5,20 @@ import MenuItem from "./MenuItem";
 import { getMenu } from "../../services/apiRestaurant";
 
 function Menu() {
-	const menu = useLoaderData();
+  const menu = useLoaderData();
 
-	console.log(menu);
-
-	return (
-		<ul>
-			{menu.map((pizza) => (
-				<MenuItem key={pizza.id} {...pizza} />
-			))}
-		</ul>
-	);
+  return (
+    <ul className="divide-y divide-stone-200 px-2">
+      {menu.map((pizza) => (
+        <MenuItem key={pizza.id} {...pizza} />
+      ))}
+    </ul>
+  );
 }
 
 export const loader = async () => {
-	const menu = await getMenu();
-	return menu;
+  const menu = await getMenu();
+  return menu;
 };
 
 export default Menu;
