@@ -1,11 +1,21 @@
 import { useState } from "react";
 import Button from "../../ui/Button";
+import { useAppContext } from "../../context/AppProvider";
+import { useNavigate } from "react-router-dom";
 
 function CreateUser() {
-  const [username, setUsername] = useState("");
+  const [localUsername, setLocalUsername] = useState("");
+  const { dispatch } = useAppContext();
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (!localUsername) return;
+
+    dispatch({ type: "SET_USERNAME", payload: localUsername });
+    setLocalUsername("");
+    navigate("/menu");
   }
 
   return (
@@ -17,12 +27,12 @@ function CreateUser() {
       <input
         type="text"
         placeholder="Your full name"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={localUsername}
+        onChange={(e) => setLocalUsername(e.target.value)}
         className="input mb-8 w-72"
       />
 
-      {username !== "" && (
+      {localUsername !== "" && (
         <div>
           <Button type="primary">Start ordering</Button>
         </div>
