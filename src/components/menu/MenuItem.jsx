@@ -1,7 +1,27 @@
+import { useAppContext } from "../../context/AppProvider";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
+import DeleteItem from "../cart/DeleteItem";
 
 function MenuItem({ id, name, unitPrice, ingredients, soldOut, imageUrl }) {
+  const { dispatch, getCurrentQtyById } = useAppContext();
+
+  const currentQty = getCurrentQtyById(id);
+
+  const isInCart = currentQty > 0;
+
+  const handleAddToCart = () => {
+    const newItem = {
+      pizzaId: id,
+      name,
+      quantity: 1,
+      unitPrice,
+      totalPrice: unitPrice * 1,
+    };
+
+    dispatch({ type: "ADD_ITEM", payload: newItem });
+  };
+
   return (
     <li className="flex gap-4 py-2">
       <img
@@ -22,7 +42,14 @@ function MenuItem({ id, name, unitPrice, ingredients, soldOut, imageUrl }) {
               Sold out
             </p>
           )}
-          <Button type="small">Add to cart</Button>
+
+          {isInCart && <DeleteItem pizzaId={id} />}
+
+          {!soldOut && !isInCart && (
+            <Button onClick={handleAddToCart} type="small">
+              Add to cart
+            </Button>
+          )}
         </div>
       </div>
     </li>
