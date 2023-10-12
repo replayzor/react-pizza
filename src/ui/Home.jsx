@@ -4,6 +4,7 @@ import Button from "./Button";
 
 function Home() {
   const { username } = useAppContext();
+
   return (
     <div className="mx-4 my-10 text-center sm:my-16">
       <h1 className="mb-8 text-xl font-semibold md:text-3xl">
