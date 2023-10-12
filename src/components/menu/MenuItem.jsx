@@ -2,6 +2,7 @@ import { useAppContext } from "../../context/AppProvider";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 import DeleteItem from "../cart/DeleteItem";
+import UpdateItemQty from "../cart/UpdateItemQty";
 
 function MenuItem({ id, name, unitPrice, ingredients, soldOut, imageUrl }) {
   const { dispatch, getCurrentQtyById } = useAppContext();
@@ -43,7 +44,12 @@ function MenuItem({ id, name, unitPrice, ingredients, soldOut, imageUrl }) {
             </p>
           )}
 
-          {isInCart && <DeleteItem pizzaId={id} />}
+          {isInCart && (
+            <div className="flex items-center gap-3 sm:gap-8">
+              <UpdateItemQty currQuantity={currentQty} pizzaId={id} />
+              <DeleteItem pizzaId={id} />
+            </div>
+          )}
 
           {!soldOut && !isInCart && (
             <Button onClick={handleAddToCart} type="small">
