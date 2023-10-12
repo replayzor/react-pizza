@@ -26,6 +26,7 @@ function CreateUser() {
 
       <input
         type="text"
+        autoComplete="name"
         placeholder="Your full name"
         value={localUsername}
         onChange={(e) => setLocalUsername(e.target.value)}
